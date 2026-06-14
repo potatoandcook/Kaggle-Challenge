@@ -19,8 +19,8 @@ enum class DataType {
 };
 struct Combine {
     DataType Type;
-    cv::Mat Img;
-    cv::Mat Msk;
+    fs::path ImgP;
+    fs::path MskP;
 };
 
 
@@ -46,26 +46,34 @@ void setVec(std::vector<fs::directory_entry> &files, const fs::path &path) {
 }
 
 void mkStruct(std::vector<fs::directory_entry> &image, std::vector<fs::directory_entry> &mask, DataType type) {
-    for (int i = 0; i < image.size(); i++) {
+    for (size_t i = 0; i < image.size(); i++) {
         Combine combine;
+        std::cout << "test" << std::endl;
         combine.Type = type;
-        combine.Img = cv::imread(image[i].path().string(), cv::IMREAD_UNCHANGED);
-        combine.Msk = cv::imread(mask[i].path().string(), cv::IMREAD_UNCHANGED);
+        combine.ImgP = image[i].path().filename();
+        combine.MskP = mask[i].path().filename();
+       // combine.Img = cv::imread(image[i].path().string(), cv::IMREAD_UNCHANGED);
+        //combine.Msk = cv::imread(mask[i].path().string(), cv::IMREAD_UNCHANGED);
         allFiles.push_back(combine);
     }
 }
 
-
-
 int main() {
+
+
     setVec(obj_apoImg, apoImgP);
     setVec(obj_apoMsk, apoMskP);
     setVec(obj_fasImg, fasImgP);
     setVec(obj_fasMsk, fasMskP);
+    std::cout << obj_apoImg.size() << std::endl;
+    std::cout << obj_apoMsk.size() << std::endl;
+    std::cout << obj_fasImg.size() << std::endl;
+    std::cout << obj_fasMsk.size() << std::endl;
 
     mkStruct(obj_apoImg, obj_apoMsk, DataType::Apo);
     mkStruct(obj_fasImg, obj_fasMsk, DataType::Fas);
 
+    std::cout << allFiles.size() << std::endl;
 
 }
 
