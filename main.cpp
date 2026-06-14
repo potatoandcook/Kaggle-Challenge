@@ -48,11 +48,10 @@ void setVec(std::vector<fs::directory_entry> &files, const fs::path &path) {
 void mkStruct(std::vector<fs::directory_entry> &image, std::vector<fs::directory_entry> &mask, DataType type) {
     for (size_t i = 0; i < image.size(); i++) {
         Combine combine;
-        std::cout << "test" << std::endl;
         combine.Type = type;
-        combine.ImgP = image[i].path().filename();
-        combine.MskP = mask[i].path().filename();
-       // combine.Img = cv::imread(image[i].path().string(), cv::IMREAD_UNCHANGED);
+        combine.ImgP = image[i].path();
+        combine.MskP = mask[i].path();
+        //combine.Img = cv::imread(image[i].path().string(), cv::IMREAD_UNCHANGED);
         //combine.Msk = cv::imread(mask[i].path().string(), cv::IMREAD_UNCHANGED);
         allFiles.push_back(combine);
     }
@@ -73,7 +72,25 @@ int main() {
     mkStruct(obj_apoImg, obj_apoMsk, DataType::Apo);
     mkStruct(obj_fasImg, obj_fasMsk, DataType::Fas);
 
-    std::cout << allFiles.size() << std::endl;
+    for (const auto &file : allFiles) {
+        cv::Mat img = cv::imread(file.ImgP.string(), cv::IMREAD_UNCHANGED);
+        cv::Mat msk = cv::imread(file.MskP.string(), cv::IMREAD_UNCHANGED);
+        cv::Mat modO, modC;
+        if (img.size() != msk.size()) {
+            cv::resize(msk, msk, img.size(), 0, 0, cv::INTER_NEAREST);
+        }
+        // cv::addWeighted(img, 0.5, msk, 0.5, 0, modO);
+        cv::add(img, msk, modC);
+        std::cout << file.ImgP << std::endl;
 
-}
 
+        // cv::imwrite("/mnt/c/outImg/overlayed.tif", modO);
+        if (file.Type == DataType::Apo) {
+            cv::imwrite(("/mnt/c/outImg/apo/" + file.ImgP.filename().string()), modC);
+        }
+        else {
+            cv::imwrite(("/mnt/c/outImg/fas/" + file.ImgP.filename().string()), modC);
+
+        }
+        }
+    }
