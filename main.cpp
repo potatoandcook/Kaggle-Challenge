@@ -79,8 +79,8 @@ for (const auto &file : allFiles) {
         if (img.size() != msk.size()) {
             cv::resize(msk, msk, img.size(), 0, 0, cv::INTER_NEAREST);
         }
-        cv::addWeighted(img, 0.5, msk, 0.5, 0, modC);
-        // cv::add(img, msk, modC);
+        //cv::addWeighted(img, 0.5, msk, 0.5, 0, modC);
+        cv::add(img, msk, modC);
         std::cout << file.ImgP << std::endl;
 
         if (file.Type == DataType::Apo) {
