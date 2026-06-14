@@ -1,0 +1,3 @@
+/mnt/c/Users/Dannial Qureshi/CLionProjects/ultra/cmake-build-debug/CMakeFiles/ultra.dir
+/mnt/c/Users/Dannial Qureshi/CLionProjects/ultra/cmake-build-debug/CMakeFiles/edit_cache.dir
+/mnt/c/Users/Dannial Qureshi/CLionProjects/ultra/cmake-build-debug/CMakeFiles/rebuild_cache.dir

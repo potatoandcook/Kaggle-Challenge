@@ -1,0 +1,8 @@
+[
+{
+  "directory": "/mnt/c/Users/Dannial Qureshi/CLionProjects/ultra/cmake-build-debug",
+  "command": "/usr/bin/c++  -isystem /usr/include/opencv4 -g -std=gnu++17 -fdiagnostics-color=always -o CMakeFiles/ultra.dir/main.cpp.o -c \"/mnt/c/Users/Dannial Qureshi/CLionProjects/ultra/main.cpp\"",
+  "file": "/mnt/c/Users/Dannial Qureshi/CLionProjects/ultra/main.cpp",
+  "output": "CMakeFiles/ultra.dir/main.cpp.o"
+}
+]
