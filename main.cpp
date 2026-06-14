@@ -72,19 +72,17 @@ int main() {
     mkStruct(obj_apoImg, obj_apoMsk, DataType::Apo);
     mkStruct(obj_fasImg, obj_fasMsk, DataType::Fas);
 
-    for (const auto &file : allFiles) {
-        cv::Mat img = cv::imread(file.ImgP.string(), cv::IMREAD_UNCHANGED);
-        cv::Mat msk = cv::imread(file.MskP.string(), cv::IMREAD_UNCHANGED);
+for (const auto &file : allFiles) {
+        cv::Mat img = cv::imread(file.ImgP.string(), cv::IMREAD_GRAYSCALE);
+        cv::Mat msk = cv::imread(file.MskP.string(), cv::IMREAD_GRAYSCALE);
         cv::Mat modO, modC;
         if (img.size() != msk.size()) {
             cv::resize(msk, msk, img.size(), 0, 0, cv::INTER_NEAREST);
         }
-        // cv::addWeighted(img, 0.5, msk, 0.5, 0, modO);
-        cv::add(img, msk, modC);
+        cv::addWeighted(img, 0.5, msk, 0.5, 0, modC);
+        // cv::add(img, msk, modC);
         std::cout << file.ImgP << std::endl;
 
-
-        // cv::imwrite("/mnt/c/outImg/overlayed.tif", modO);
         if (file.Type == DataType::Apo) {
             cv::imwrite(("/mnt/c/outImg/apo/" + file.ImgP.filename().string()), modC);
         }
