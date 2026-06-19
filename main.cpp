@@ -64,10 +64,10 @@ int main() {
     setVec(obj_apoMsk, apoMskP);
     setVec(obj_fasImg, fasImgP);
     setVec(obj_fasMsk, fasMskP);
-    std::cout << obj_apoImg.size() << std::endl;
-    std::cout << obj_apoMsk.size() << std::endl;
-    std::cout << obj_fasImg.size() << std::endl;
-    std::cout << obj_fasMsk.size() << std::endl;
+    //std::cout << obj_apoImg.size() << std::endl;
+    //std::cout << obj_apoMsk.size() << std::endl;
+    //std::cout << obj_fasImg.size() << std::endl;
+    //std::cout << obj_fasMsk.size() << std::endl;
 
     mkStruct(obj_apoImg, obj_apoMsk, DataType::Apo);
     mkStruct(obj_fasImg, obj_fasMsk, DataType::Fas);
@@ -91,4 +91,5 @@ for (const auto &file : allFiles) {
 
         }
         }
+    
     }
