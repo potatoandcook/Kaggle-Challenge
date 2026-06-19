@@ -2,7 +2,7 @@
 #include <opencv2/opencv.hpp>
 #include <filesystem>
 #include <vector>
-
+#include "create.h"
 namespace fs = std::filesystem;
 
 
@@ -71,7 +71,7 @@ int main() {
 
     mkStruct(obj_apoImg, obj_apoMsk, DataType::Apo);
     mkStruct(obj_fasImg, obj_fasMsk, DataType::Fas);
-
+/*
 for (const auto &file : allFiles) {
         cv::Mat img = cv::imread(file.ImgP.string(), cv::IMREAD_GRAYSCALE);
         cv::Mat msk = cv::imread(file.MskP.string(), cv::IMREAD_GRAYSCALE);
@@ -90,6 +90,8 @@ for (const auto &file : allFiles) {
             cv::imwrite(("/mnt/c/outImg/fas/" + file.ImgP.filename().string()), modC);
 
         }
-        }
-    
+        } */
+
+    cv::imwrite(("/mnt/c/outImg/test/img.tif"), newMask(apoImgP));
+
     }
