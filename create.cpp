@@ -17,13 +17,16 @@ cv::Mat newMask(const fs::path &path)
         int size = img.rows * img.cols;
         std::vector<uchar> pixels (size,0);
         for (int j = 0; j < size; j++) {
-            if (img.data[j]>35) {
+            uchar pSum = 0;
+            int sum =0;
+            if (img.data[j]>4) {
                 int cRow = j/img.rows;
                 int cCol = j%img.cols;
                 int allP[8];
+                uchar allPC[8];
                 uchar pixelC = img.data[j];
 
-                //Start from top left
+                //Start from top left to right (clockwise)
                 allP[0] = (cRow-1) *img.cols + (cCol-1) ;
                 allP[1] = (cRow-1) * img.cols + (cCol);
                 allP[2] = (cRow-1) *img.cols + (cCol+1);
@@ -32,24 +35,30 @@ cv::Mat newMask(const fs::path &path)
                 allP[5]= (cRow+1) * img.cols + (cCol);
                 allP[6] = (cRow+1) *img.cols + (cCol-1);
                 allP[7] = (cRow) * img.cols + (cCol-1);
+                for (int i = 0; i<8; i++) {
+                    if ((allP[i] <= size)&&(allP[i] >= 0)) {
+                        sum += 1;
+                        pSum += img.data[allP[i]];
+                    }
+                    else {
+                        sum =1;
+                    }
+                }
 
 
-
-
-
-
-                uchar uLP = img.data[uL];
-                uchar uP = img.data[u];
-                uchar uRP = img.data[uR];
-                uchar bRP = img.data[bR];
-                uchar dP = img.data[d];
-                uchar lP = img.data[l];
-                uchar rP = img.data[r];
-                uchar bLP = img.data[bL];
+                uchar avgP = (pSum/=sum);
+                //  uchar uLP = img.data[uL];
+              //  uchar uP = img.data[u];
+               // uchar uRP = img.data[uR];
+              //  uchar bRP = img.data[bR];
+               // uchar dP = img.data[d];
+               // uchar lP = img.data[l];
+               // uchar rP = img.data[r];
+                //uchar bLP = img.data[bL];
 
                 // Spahgeti code
-                uchar avgP = (uLP + uRP + bRP + dP + lP + rP + uP + bLP)/8;
-                if (((pixelC <= avgP) && (pixelC >= (avgP-20)))||((pixelC >= avgP) && (pixelC <= (avgP+20)))) {
+               // uchar avgP = (uLP + uRP + bRP + dP + lP + rP + uP + bLP)/8;
+                if (((pixelC <= avgP) && (pixelC >= (avgP-10)))||((pixelC >= avgP) && (pixelC <= (avgP+10)))) {
                     pixels[j]=(255);
                 }
                 else {
