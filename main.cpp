@@ -92,6 +92,6 @@ for (const auto &file : allFiles) {
         }
         } */
 
-    cv::imwrite(("/mnt/c/outImg/test/img1.tif"), newMask(apoImgP));
+    cv::imwrite(("/mnt/c/outImg/test/img2.tif"), newMask(apoImgP));
 
     }
