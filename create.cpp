@@ -14,22 +14,31 @@ cv::Mat newMask(const fs::path &path)
 {
     for (const fs::directory_entry &file: fs::directory_iterator(path)) {
         cv::Mat img = cv::imread(file.path().string(), cv::IMREAD_GRAYSCALE);
-        std::vector<uchar> pixels;
         int size = img.rows * img.cols;
+        std::vector<uchar> pixels (size,0);
         for (int j = 0; j < size; j++) {
             if (img.data[j]>0) {
-                pixels.push_back(255);
-            }
-            else {
-                pixels.push_back(0);
-            }
+                uchar pixel = img.data[j];
+                int cRow = j/img.rows;
+                int cCol = j/img.cols;
 
+                int uL = (cRow-1) *(cCol-1);
+                int uR = (cRow-1) *(cCol+1);
+                int bR = (cRow+1) *(cCol+1);
+                int bL = (cRow+1) *(cCol-1);
+                uchar uLP = img.data[uL];
+                uchar uRP = img.data[uR];
+                uchar bRP = img.data[bR];
+                uchar bLP = img.data[bL];
+
+
+                pixels[j]=(255);
+
+            }
         }
         std::cout << (int)img.data[2] << "FilePath: "<<file.path().string()<< std::endl;
         cv::Mat maskImg(img.rows,img.cols,CV_8UC1,(pixels.data()));
         return maskImg.clone();
     }
-
-
 }
 
