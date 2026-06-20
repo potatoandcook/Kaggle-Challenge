@@ -20,12 +20,13 @@ cv::Mat newMask(const fs::path &path)
             if (img.data[j]>0) {
                 uchar pixel = img.data[j];
                 int cRow = j/img.rows;
-                int cCol = j/img.cols;
+                int cCol = j%img.cols;
 
-                int uL = (cRow-1) *(cCol-1);
-                int uR = (cRow-1) *(cCol+1);
-                int bR = (cRow+1) *(cCol+1);
-                int bL = (cRow+1) *(cCol-1);
+                int uL = (cRow-1) * (cCol-1);
+                int uR = (cRow-1) * (cCol+1);
+                int bR = (cRow+1) * (cCol+1);
+                int bL = (cRow+1) * (cCol-1);
+
                 uchar uLP = img.data[uL];
                 uchar uRP = img.data[uR];
                 uchar bRP = img.data[bR];
