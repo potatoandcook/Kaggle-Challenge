@@ -17,19 +17,26 @@ cv::Mat newMask(const fs::path &path)
         int size = img.rows * img.cols;
         std::vector<uchar> pixels (size,0);
         for (int j = 0; j < size; j++) {
-            if (img.data[j]>0) {
+            if (img.data[j]>35) {
                 int cRow = j/img.rows;
                 int cCol = j%img.cols;
+                int allP[8];
                 uchar pixelC = img.data[j];
 
-                int uL = (cRow-1) *img.cols + (cCol-1) ;
-                int u = (cRow-1) * img.cols + (cCol);
-                int uR = (cRow-1) *img.cols + (cCol+1);
-                int l = (cRow) * img.cols + (cCol-1);
-                int bR = (cRow+1) *img.cols + (cCol+1);
-                int bL = (cRow+1) *img.cols + (cCol-1);
-                int r = (cRow) * img.cols + (cCol+1);
-                int d = (cRow+1) * img.cols + (cCol);
+                //Start from top left
+                allP[0] = (cRow-1) *img.cols + (cCol-1) ;
+                allP[1] = (cRow-1) * img.cols + (cCol);
+                allP[2] = (cRow-1) *img.cols + (cCol+1);
+                allP[3] = (cRow) * img.cols + (cCol+1);
+                allP[4] = (cRow+1) *img.cols + (cCol+1);
+                allP[5]= (cRow+1) * img.cols + (cCol);
+                allP[6] = (cRow+1) *img.cols + (cCol-1);
+                allP[7] = (cRow) * img.cols + (cCol-1);
+
+
+
+
+
 
                 uchar uLP = img.data[uL];
                 uchar uP = img.data[u];
@@ -40,8 +47,9 @@ cv::Mat newMask(const fs::path &path)
                 uchar rP = img.data[r];
                 uchar bLP = img.data[bL];
 
+                // Spahgeti code
                 uchar avgP = (uLP + uRP + bRP + dP + lP + rP + uP + bLP)/8;
-                if ((pixelC <= avgP) && (pixelC >= (avgP-10))) {
+                if (((pixelC <= avgP) && (pixelC >= (avgP-20)))||((pixelC >= avgP) && (pixelC <= (avgP+20)))) {
                     pixels[j]=(255);
                 }
                 else {
