@@ -37,11 +37,16 @@ cv::Mat newMask(const fs::path &path)
                 allP[7] = (cRow) * img.cols + (cCol-1);
                 for (int i = 0; i<8; i++) {
                     if ((allP[i] <= size)&&(allP[i] >= 0)) {
-                        sum += 1;
-                        pSum += img.data[allP[i]];
+                        uchar avgP = (allP[3]+allP[7])/2;
+                        uchar nP = ;
+                        uchar pP = pixelC -1;
+                        if (((avgP+5)>=nP)&&nP>=(avgP-5)) {
+
+                        }
+
                     }
                     else {
-                        sum =1;
+                        allP[i] = 0;
                     }
                 }
 
@@ -58,12 +63,12 @@ cv::Mat newMask(const fs::path &path)
 
                 // Spahgeti code
                // uchar avgP = (uLP + uRP + bRP + dP + lP + rP + uP + bLP)/8;
-                if (((pixelC <= avgP) && (pixelC >= (avgP-10)))||((pixelC >= avgP) && (pixelC <= (avgP+10)))) {
-                    pixels[j]=(255);
-                }
-                else {
-                    continue;
-                }
+             //   if (((pixelC <= avgP) && (pixelC >= (avgP-20)))||((pixelC >= avgP) && (pixelC <= (avgP+20)))) {
+              //  pixels[j]=(255);
+              //  }
+               // else {
+                //    continue;
+               // }
             }
         }
         std::cout << (int)img.data[2] << "FilePath: "<<file.path().string()<< std::endl;
@@ -71,4 +76,7 @@ cv::Mat newMask(const fs::path &path)
         return maskImg.clone();
     }
 }
+uchar nPixel() {
 
+}
+uchar pPixel(){}
